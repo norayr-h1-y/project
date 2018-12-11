@@ -1,4 +1,5 @@
-class Aryuc extends LivingCreature{
+var LivingCreature = require("./mayr-class.js");
+module.exports = class Aryuc extends LivingCreature{
     constructor(x, y, index) {
        super(x, y, index);
         this.energy = 10;

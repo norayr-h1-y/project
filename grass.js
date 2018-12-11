@@ -1,4 +1,7 @@
-class Grass extends LivingCreature{
+var LivingCreature = require("./mayr-class.js");
+
+
+module.exports = class Grass extends LivingCreature{
     
 
     bazmanal() {

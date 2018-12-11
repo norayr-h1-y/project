@@ -1,4 +1,7 @@
-class Pat extends LivingCreature{
+var LivingCreature = require("./mayr-class.js");
+
+
+module.exports = class Pat extends LivingCreature{
     constructor(x, y, index) {
         super(x, y, index);
         this.energy = 5;

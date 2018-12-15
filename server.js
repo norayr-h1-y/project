@@ -1,4 +1,16 @@
-var matrix = [
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+app.use(express.static("."));
+app.get('/', function (req, res) {
+   res.redirect('index.html');
+});
+server.listen(3000);
+
+ 
+ matrix = [
     //[4, 0, 1, 2, 2],
     //[1, 2, 5, 0, 2],
     //[4, 1, 5, 0, 0],
@@ -13,13 +25,13 @@ var Xotaker = require("./xotaker.js");
 var Gishatich = require("./gishatich.js");
 var Aryuc = require("./aryuc.js");
 var Pat = require("./pat.js");
-var c = 0;
-var grassArr = [];
-var xotakerner = [];
-var gishatichner = [];
-var aryucner = [];
-var pater = [];
-var g = 20;
+ c = 0;
+ grassArr = [];
+ xotakerner = [];
+ gishatichner = [];
+ aryucner = [];
+ pater = [];
+ g = 20;
 
 for (var y = 0; y < g; y++) {
     matrix.push([]);
@@ -152,3 +164,6 @@ function drawServerayin() {
 }
 setInterval(drawServerayin, 100);
 
+io.sockets.on('connection', function(socket){
+
+});

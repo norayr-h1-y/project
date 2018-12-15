@@ -27,7 +27,7 @@ module.exports = class Pat extends LivingCreature{
     }
     kill() {
         this.stanalNorKordinatner();
-        var norvandak = random(this.directions);
+        var norvandak = this.directions[Math.floor(Math.random() * this.directions.length)];
         if (norvandak) {
 
             if (matrix[norvandak[1]][norvandak[0]] == 1) {

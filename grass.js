@@ -6,7 +6,8 @@ module.exports = class Grass extends LivingCreature{
 
     bazmanal() {
         this.multiply++;
-        var norVandak = random(this.yntrelVandak(0));
+        var arr = this.yntrelVandak(0);
+        var norVandak = arr[Math.floor(Math.random() * arr.length)];
         //console.log(norVandak, this.multiply);
         if (this.multiply >= 8 && norVandak) {
             var norXot = new Grass(norVandak[0], norVandak[1]);

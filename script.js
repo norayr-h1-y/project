@@ -179,4 +179,4 @@ function draw() {
         pater[i].kill();
     }
 }
-
+socket.on("matrix", draw);

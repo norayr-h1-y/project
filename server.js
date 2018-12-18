@@ -113,7 +113,24 @@ for(var y = 0; y < g; y++){
         }
     }
 
+weather = "Ashun";
 
+function Exanak(){
+    if(weather == "Garun"){
+        weather = "Amar";
+    }
+    else if(weather == "Amar"){
+        weather = "Ashun";
+    }
+    else if(weather == "Ashun"){
+        weather = "Dzmer";
+    }
+    else if(weather == "Dzmer"){
+        weather = "Garun";
+    }
+}
+
+setInterval(Exanak, 900);
 
 function drawServerayin() {
     for (var i in grassArr) {
@@ -161,9 +178,13 @@ function drawServerayin() {
     for(var i in pater){
         pater[i].kill();
     }
+    io.sockets.emit("draw matrix", matrix);
 }
-setInterval(drawServerayin, 100);
 
-io.sockets.on('connection', function(socket){
-
+var firstclient = false;
+io.on('connection', function(socket){
+    if(!firstclient){
+    setInterval(drawServerayin, 300);
+    firstclient = true;
+    }
 });

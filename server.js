@@ -1,37 +1,38 @@
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
 
-app.use(express.static("."));
-app.get('/', function (req, res) {
-   res.redirect('index.html');
-});
-server.listen(3000);
-
+ var express = require('express');
+ var app = express();
+ var server = require('http').Server(app);
+ var io = require('socket.io')(server);
  
- matrix = [
-    //[4, 0, 1, 2, 2],
-    //[1, 2, 5, 0, 2],
-    //[4, 1, 5, 0, 0],
-    //[0, 0, 1, 0, 3],
-    //[1, 1, 0, 0, 0],
-    //[1, 1, 0, 0, 3],
-    //[1, 1, 0, 0, 2]
-];
-
-var Grass = require("./grass.js");
-var Xotaker = require("./xotaker.js");
-var Gishatich = require("./gishatich.js");
-var Aryuc = require("./aryuc.js");
-var Pat = require("./pat.js");
- c = 0;
- grassArr = [];
- xotakerner = [];
- gishatichner = [];
- aryucner = [];
- pater = [];
- g = 20;
+ app.use(express.static("."));
+ app.get('/', function (req, res) {
+     res.redirect('index.html');
+ });
+ server.listen(3000);
+ 
+ var Grass = require("./grass.js");
+ var Xotaker = require("./xotaker.js");
+ var Gishatich = require("./gishatich.js");
+ var Aryuc = require("./aryuc.js");
+ var Pat = require("./pat.js");
+  grassArr = [];
+ var c = 0;
+ 
+ 
+  matrix = [
+     // [1, 0, 1, 0, 1],
+     // [1, 0, 0, 0, 0],
+     // [0, 1, 0, 1, 0],
+     // [0, 0, 1, 0, 0],
+     // [1, 1, 0, 0, 0],
+     // [1, 1, 0, 0, 0],
+     // [1, 1, 0, 0, 2]
+ ];
+  gishatichner = []
+  xotakerner = []
+  aryucner = []
+  pater = []
+  g = 20
 
 for (var y = 0; y < g; y++) {
     matrix.push([]);
@@ -113,28 +114,12 @@ for(var y = 0; y < g; y++){
         }
     }
 
-weather = "Ashun";
 
-function Exanak(){
-    if(weather == "Garun"){
-        weather = "Amar";
-    }
-    else if(weather == "Amar"){
-        weather = "Ashun";
-    }
-    else if(weather == "Ashun"){
-        weather = "Dzmer";
-    }
-    else if(weather == "Dzmer"){
-        weather = "Garun";
-    }
-}
-
-setInterval(Exanak, 900);
 
 function drawServerayin() {
     for (var i in grassArr) {
         grassArr[i].bazmanal();
+        io.sockets.emit("stats", {type:"xot", count: grassArr.length})
     }
     // for(var i in xotakerner){
     //   xotakerner[i].sharjvel();
@@ -156,6 +141,7 @@ function drawServerayin() {
     for (var i in gishatichner) {
         if (gishatichner[i].energy >= 20) {
             gishatichner[i].bazmanal();
+            io.sockets.emit("stats", {type:"gishatic", count: gishatichner.length})
         }
         else if (gishatichner[i].energy <= 0) {
             gishatichner[i].mahanal(i);
@@ -168,23 +154,45 @@ function drawServerayin() {
     for (var i in xotakerner) {
         if (xotakerner[i].energy >= 10) {
             xotakerner[i].bazmanal();
+            io.sockets.emit("stats", {type:"xotaker", count: xotakerner.length})
         }
         else if (xotakerner[i].energy <= 0) {
 
             xotakerner[i].mahanal(i);
         }
     }
-
+    
     for(var i in pater){
         pater[i].kill();
     }
-    io.sockets.emit("draw matrix", matrix);
+    io.sockets.emit("matrix", matrix)
 }
 
-var firstclient = false;
-io.on('connection', function(socket){
-    if(!firstclient){
-    setInterval(drawServerayin, 300);
-    firstclient = true;
+
+setInterval(drawServerayin, 250);
+
+io.sockets.on("connection", function (socket) {
+    socket.on("send", function(data) {
+        console.log(data)
+    })
+}); 
+
+weather = "Garun"
+
+function Exanak() {
+    if (weather == "Garun"){
+        weather = "Amar"
     }
-});
+    else if (weather == "Amar") {
+        weather = "Ashun"
+    }
+    else if (weather == "Ashun") {
+        weather = "Dzmer"
+    }
+    else if (weather == "Dzmer") {
+        weather = "Garun"
+    }
+    io.sockets.emit("weather", weather)
+}
+
+ setInterval(Exanak, 900)

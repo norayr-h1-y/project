@@ -1,13 +1,41 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-    <script src = "/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
 
+    <meta charset="utf8">
+<style>
+    .stats-block {
+        border:1px solid black;
+        width: 150px;
+        height: 150px;
+    }
+    #xot {
+        color: black;
+        font-size: 20px;
+    }
+    #gishatic{
+        color: black;
+        font-size: 20px;
+    }
+    #xotaker {
+        color: black;
+        font-size: 20px;
+    }
+    </style>
 </head>
 
 <body>
+    <div class="stats-block">
+        <div id="xotaker"></div>
+        <div id="gishatic"></div>
+        <div id="xot"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
+    
 </body>
 
 </html>
+
